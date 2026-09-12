@@ -1,0 +1,2 @@
+# Taller_React_pokemon
+proyecto Taller_React_pokemon
