@@ -20,9 +20,9 @@ export interface pokemonTarjeta{
 }
 
 interface pokemoncontextype{
-    entrenadores : Usuario[];
-    entrenadorActivo : Usuario | null;
-    mochilaActual :  pokemonTarjeta[];
+    Entrenadores : Usuario[];
+    EntrenadorActivo : Usuario | null;
+    MochilaActual : pokemonTarjeta[];
     seleccionarEntrenador : (Usuario: Usuario) => void;
     registrarEntrenador : (Usuario: Usuario) => void;
     GuardarMochila : (pokemon : pokemonTarjeta) => void;
@@ -33,9 +33,9 @@ interface pokemoncontextype{
 const pokemoncontext = createContext<pokemoncontextype | undefined>(undefined);
 
 export const pokemonprovider : React.FC<{children : React.ReactNode}> = ({children}) => {
-    const [entrenadoresActivo,setentrenadoresActivo] = useState<Usuario[]>([]);
-    const [entrenadorActivo,setentrenadorActivo] = useState<Usuario[] | null>(null);
-    const [mochilaActual,mochilaActual] = useState<pokemonTarjeta[] | null>(null);
+    const [EntrenadoresActivo,setentrenadoresActivo] = useState<Usuario[]>([]);
+    const [EntrenadorActivo,setentrenadorActivo] = useState<Usuario | null>(null);
+    const [MochilaActual,setmochilaActual] = useState<pokemonTarjeta[]>([]);
     
 
     useEffect(() => {
@@ -49,13 +49,12 @@ export const pokemonprovider : React.FC<{children : React.ReactNode}> = ({childr
                 const encotrado = LISTA.find(U => U.id.toString() === idActivo);
                 if (encotrado) seleccionarEntrenador(encotrado)
             }
+        }
     },[]);
 
     const cargarMochilaEntrenador = (UsuarioId: number) =>{
-        setentrenadorActivo(usuario);
-
-        const data = localStorage.getItem('mochila_${usuarioId}');
-        setcargarMochilaEntrenador(data ? JSON.parse(data) : []);
+        const data = localStorage.getItem(`mochila_${UsuarioId}`);
+        setmochilaActual(data ? JSON.parse(data) : []);
 
     }
 
@@ -63,7 +62,16 @@ export const pokemonprovider : React.FC<{children : React.ReactNode}> = ({childr
     const seleccionarEntrenador = (Usuario : Usuario) =>{
         setentrenadorActivo(Usuario);
 
-        localStorage.setItem ('entrenador_activo_id', Usuario.id.toString());
+        localStorage.setItem ('entrenador_Activo_id', Usuario.id.toString());
         cargarMochilaEntrenador(Usuario.id);
     }
+
+    const registrarEntrenador = ( nuevoUsuario : Usuario) => {
+
+          const actualizado = [...EntrenadoresActivo,nuevoUsuario];
+          setentrenadoresActivo(actualizado);
+          localStorage.setItem('LISTA_ENTRENADORES', JSON.stringify(actualizado));
+          seleccionarEntrenador(nuevoUsuario);
+    }
+
 }
