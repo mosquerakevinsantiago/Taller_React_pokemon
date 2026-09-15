@@ -23,9 +23,11 @@ import { InventarioPokemon } from './components/InventarioPokemon';
         </header>
         <div>
           <main>
-            <Routes path ="/registro"element ={<Navigate to ="/registro"  replace/>}/>
-            <Routes path ="/buscador"element ={<Navigate to ="/buscador"  replace/>}/>
-            <Routes path ="/inventario"element ={<Navigate to ="/inventario"  replace/>}/>
+            <Routes>
+            <Route path ="/registro"element ={<Navigate to ="/registro"  replace/>}/>
+            <Route path ="/buscador"element ={<Navigate to ="/buscador"  replace/>}/>
+            <Route path ="/inventario"element ={<Navigate to ="/inventario"  replace/>}/>
+            </Routes>
           </main>
         </div>
 

@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { UseNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { usePokemonContext, type Usuario } from '../context/PokemonContext';
 
-export const RegistroUsuario = () => {
+export const RegistroUsuario : React.FC = () => {
     const { registrarEntrenador } = usePokemonContext();
     const [nombre, setNombre] = useState('');
     const [apellido, setApellido] = useState('');
@@ -36,6 +36,7 @@ export const RegistroUsuario = () => {
         };
 
         registrarEntrenador(nuevo);
+        navigate('/buscador');
     };
 
     return (

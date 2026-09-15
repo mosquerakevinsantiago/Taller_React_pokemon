@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { UseNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { usePokemonContext, type Usuario } from '../context/PokemonContext';
 
-export const RegistroUsuario = () => {
+export const RegistroUsuario : React.FC = () => {
     const { registrarEntrenador } = usePokemonContext();
     const [nombre, setNombre] = useState('');
     const [apellido, setApellido] = useState('');
@@ -15,7 +15,7 @@ export const RegistroUsuario = () => {
     const [correo, setCorreo] = useState('');
     const [datosPersonales, setDatosPersonales] = useState(false);
 
-    const eventoSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const eventoSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!datosPersonales) {
@@ -36,6 +36,7 @@ export const RegistroUsuario = () => {
         };
 
         registrarEntrenador(nuevo);
+        navigate('/registro');
     };
 
     return (
