@@ -35,6 +35,7 @@ export const RegistroUsuario : React.FC = () => {
             fechaRegistro: new Date().toISOString(),
         };
 
+        const navigate = useNavigate();
         registrarEntrenador(nuevo);
         navigate('/registro');
     };
