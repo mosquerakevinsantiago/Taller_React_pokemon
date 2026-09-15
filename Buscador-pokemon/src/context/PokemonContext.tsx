@@ -4,10 +4,12 @@ export interface Usuario {
     id: number;
     nombreCompleto: string;
     documento: { tipo: string, numero: string};
-    fechaNaciminento:string;
+    fechaNacimiento:string;
     correo: string;
-    datospersonales:boolean;
+    residencia: string;
+    datosPersonales:boolean;
     fechaRegistro:string;
+    telefono?: string;
 }
 
 export interface pokemonTarjeta{
@@ -32,7 +34,15 @@ interface pokemoncontextype{
 
 const pokemoncontext = createContext<pokemoncontextype | undefined>(undefined);
 
-export const pokemonprovider : React.FC<{children : React.ReactNode}> = ({children}) => {
+export const usePokemonContext = () => {
+    const context = useContext(pokemoncontext);
+    if (!context) {
+        throw new Error('usePokemonContext debe usarse dentro de PokemonProvider');
+    }
+    return context;
+};
+
+export const PokemonProvider : React.FC<{children : React.ReactNode}> = ({children}) => {
     const [EntrenadoresActivo,setentrenadoresActivo] = useState<Usuario[]>([]);
     const [EntrenadorActivo,setentrenadorActivo] = useState<Usuario | null>(null);
     const [MochilaActual,setmochilaActual] = useState<pokemonTarjeta[]>([]);
@@ -104,3 +114,5 @@ export const pokemonprovider : React.FC<{children : React.ReactNode}> = ({childr
         </pokemoncontext.Provider>
     );
 };
+
+export const pokemonprovider = PokemonProvider;
