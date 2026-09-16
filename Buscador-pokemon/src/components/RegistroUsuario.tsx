@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { usePokemonContext, type Usuario } from '../context/PokemonContext';
 
 export const RegistroUsuario : React.FC = () => {
-    const { registrarEntrenador } = usePokemonContext();
+    const { registrarEntrenador, Entrenadores, seleccionarEntrenador, EntrenadorActivo } = usePokemonContext();
+    const navigate = useNavigate();
     const [nombre, setNombre] = useState('');
     const [apellido, setApellido] = useState('');
     const [tipoDoc, setTipoDoc] = useState('CC');
@@ -35,7 +36,6 @@ export const RegistroUsuario : React.FC = () => {
             fechaRegistro: new Date().toISOString(),
         };
 
-        const navigate = useNavigate();
         registrarEntrenador(nuevo);
         navigate('/registro');
     };
@@ -116,6 +116,22 @@ export const RegistroUsuario : React.FC = () => {
                     <button type="submit" className="btn-submit">Enviar mensaje</button>
                 </form>
             </div>
+            {Entrenadores.length > 0 &&(
+                <div>
+                    <h3> cambiar Entrenador</h3>
+                    <div>
+                        {Entrenadores.map((user) => (
+                            <button key={user.id} type="button" onClick={() => seleccionarEntrenador(user)}
+                            style = {{
+                                backgroundColor: EntrenadorActivo?.id === user.id ? '#ff00fff6' : '#e0e0c0',
+                                color : EntrenadorActivo?.id === user.id ? 'white': 'black',
+                                padding: '6px 12px'
+                            }}>{user.nombreCompleto}</button>
+                        ))}
+                        
+                        </div>
+                </div>
+            )}
         </div>
     );
 };

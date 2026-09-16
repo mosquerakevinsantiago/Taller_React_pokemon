@@ -1,19 +1,18 @@
 import { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
 import { usePokemonContext, type Usuario } from '../context/PokemonContext';
 
 export const InventarioPokemon = () => {
     const { registrarEntrenador } = usePokemonContext();
-    const [nombre, setNombre] = useState('');
-    const [apellido, setApellido] = useState('');
-    const [tipoDoc, setTipoDoc] = useState('CC');
-    const [pais, setPais] = useState('');
-    const [ciudad, setCiudad] = useState('');
-    const [dni, setDni] = useState('');
-    const [fechaNacimiento, setFechaNacimiento] = useState('');
-    const [telefono, setTelefono] = useState('');
-    const [correo, setCorreo] = useState('');
-    const [datosPersonales, setDatosPersonales] = useState(false);
+    const [nombre] = useState('');
+    const [apellido] = useState('');
+    const [tipoDoc] = useState('CC');
+    const [pais] = useState('');
+    const [ciudad] = useState('');
+    const [dni] = useState('');
+    const [fechaNacimiento] = useState('');
+    const [telefono] = useState('');
+    const [correo] = useState('');
+    const [datosPersonales] = useState(false);
 
     const eventoSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -42,7 +41,7 @@ export const InventarioPokemon = () => {
 
     return (
         <div>
-            
+            <form onSubmit={eventoSubmit}></form>
         </div>
     );
 };

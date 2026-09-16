@@ -1,50 +1,85 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { usePokemonContext, type Usuario } from '../context/PokemonContext';
+import React, { useState } from "react";
+import { usePokemonContext, type pokemonTarjeta } from "../context/PokemonContext";
 
-export const BuscadorPokemon : React.FC = () => {
-    const { registrarEntrenador } = usePokemonContext();
-    const [nombre, setNombre] = useState('');
-    const [apellido, setApellido] = useState('');
-    const [tipoDoc, setTipoDoc] = useState('CC');
-    const [pais, setPais] = useState('');
-    const [ciudad, setCiudad] = useState('');
-    const [dni, setDni] = useState('');
-    const [fechaNacimiento, setFechaNacimiento] = useState('');
-    const [telefono, setTelefono] = useState('');
-    const [correo, setCorreo] = useState('');
-    const [datosPersonales, setDatosPersonales] = useState(false);
+export const BuscadorPokemon: React.FC = () => {
 
-    const eventoSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const { EntrenadorActivo, GuardarMochila } = usePokemonContext();
+
+
+    
+    const [busqueda, setBusqueda] = useState('');
+    const [pokemonActual, setPokemonActual] = useState<pokemonTarjeta | null>(null);
+    const [mensajeError, setMensajeError] = useState<string | null>(null);
+    const [cargando, setCargando] = useState(false);
+
+    const buscarPokemon = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!datosPersonales) {
-            alert('Debe aceptar el tratamiento de datos personales');
-            return;
+        const query = busqueda.trim().toLocaleLowerCase();
+
+        if(!query) return;
+
+
+        setCargando(true);
+        setMensajeError(null);
+
+        try {
+            const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${query}`);
+            if (!res.ok) throw new Error('Callate sapo');
+
+            const datos = await res.json();
+            setPokemonActual({
+                id: datos.id,
+                name: datos.name,
+                image:datos.sprites.front_default,
+                type:datos.types[0].type.name,
+                baseExperience: datos.base_experience,
+                esFavorito : false
+            });
+        } catch (error:any){
+            setPokemonActual(null);
+            setMensajeError(error.message);
+        } finally {
+            setCargando(false);
         }
+    
+    }; 
 
-        const nuevo: Usuario = {
-            id: Date.now(),
-            nombreCompleto: `${nombre} ${apellido}`.trim(),
-            documento: { tipo: tipoDoc, numero: dni },
-            fechaNacimiento,
-            correo,
-            telefono,
-            residencia: `${ciudad}, ${pais}`,
-            datosPersonales,
-            fechaRegistro: new Date().toISOString(),
-        };
+    if (pokemonActual){
+        GuardarMochila(pokemonActual);
+        alert(`El pokemon ${pokemonActual.name} es guardado en la mochila de ${EntrenadorActivo?.nombreCompleto}`);
 
-        const navigate = useNavigate(); 
+    }
+
+    return(
+        <><div>
+            {EntrenadorActivo ? (
+                <p> Mochila Activa de : <strong>{EntrenadorActivo.nombreCompleto}</strong></p>
+            ) : (
+                <p> No hay entrenador Activo. ve al formulario de Registro para activarlo, socio.</p>
+
+            )}
+        </div><form onSubmit={buscarPokemon}>
+                <div>
+                    <label>Buscar pokemon</label>
+                    <input type="text" value={busqueda} onChange={(e) => setBusqueda(e.target.value)} placeholder="ej: pikachu, charmander" />
+
+                </div>
+                <button type="submit" disabled={cargando}>
+                    {cargando ? 'ESCANEANDO...' : 'buscar'}
+                </button>
+                {mensajeError && <p>{mensajeError}</p>}
+            </form>
         
-        registrarEntrenador(nuevo);
 
-        navigate('/buscador');
-    };
+        {pokemonActual && (
+            <div>
+            <h3>{pokemonActual.name}</h3>
+            <img src={pokemonActual.image} alt={pokemonActual.name} />
+            </div>
+        )}
 
-    return (
-        <div>
-            
-        </div>
+        </>
     );
-};
+
+}
