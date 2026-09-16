@@ -28,14 +28,19 @@ export const BuscadorPokemon: React.FC = () => {
             if (!res.ok) throw new Error('Callate sapo');
 
             const datos = await res.json();
-            setPokemonActual({
+            const pokemonEncontrado: pokemonTarjeta = {
                 id: datos.id,
                 name: datos.name,
                 image:datos.sprites.front_default,
                 type:datos.types[0].type.name,
                 baseExperience: datos.base_experience,
                 esFavorito : false
-            });
+            };
+            setPokemonActual(pokemonEncontrado);
+            if (EntrenadorActivo) {
+                GuardarMochila(pokemonEncontrado);
+                alert(`El pokemon ${pokemonEncontrado.name} es guardado en la mochila de ${EntrenadorActivo.nombreCompleto}`);
+            }
         } catch (error:any){
             setPokemonActual(null);
             setMensajeError(error.message);
@@ -44,12 +49,6 @@ export const BuscadorPokemon: React.FC = () => {
         }
     
     }; 
-
-    if (pokemonActual){
-        GuardarMochila(pokemonActual);
-        alert(`El pokemon ${pokemonActual.name} es guardado en la mochila de ${EntrenadorActivo?.nombreCompleto}`);
-
-    }
 
     return(
         <><div>

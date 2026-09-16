@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, NavLink,Navigate} from 'react-router-dom';
+import { BrowserRouter, Routes, Route, NavLink } from 'react-router-dom';
 import { PokemonProvider } from './context/PokemonContext';
 import { RegistroUsuario } from './components/RegistroUsuario';
 import { BuscadorPokemon } from './components/Buscadorpokemon';
