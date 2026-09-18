@@ -1,6 +1,14 @@
 import React from "react";
 import { usePokemonContext } from "../context/PokemonContext";
 
+type PokemonEnMochila = {
+	id: number;
+	image: string;
+	name: string;
+	type: string;
+	esFavorito: boolean;
+};
+
 export const InventarioPokemon: React.FC = () => {
     const { EntrenadorActivo, MochilaActual, actualizarFavorito, eliminarpokemon } = usePokemonContext();
 
@@ -21,7 +29,7 @@ export const InventarioPokemon: React.FC = () => {
 
 			<div className="grid-mochila">
 				{MochilaActual.length > 0 ? (
-					MochilaActual.map((poke, index) => (
+					MochilaActual.map((poke: PokemonEnMochila, index: number) => (
 						<div key={poke.id} className={`tarjeta-item ${poke.esFavorito ? 'tarjeta-favorita' : ''}`}>
 							<span>
 								#{index + 1} de {MochilaActual.length}

@@ -1,107 +1,288 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+* {
   box-sizing: border-box;
+}
+
+:root {
+  --bg: #030712;
+  --panel: #07111f;
+  --panel-light: #0b1a2d;
+  --cyan: #00e5ff;
+  --blue: #2563ff;
+  --text: #e6faff;
+  --muted: #7c9aaa;
+  --border: rgba(0, 229, 255, 0.25);
+  --glow: rgba(0, 229, 255, 0.2);
+}
+
+html {
+  min-height: 100%;
 }
 
 body {
   margin: 0;
+  min-height: 100vh;
+
+  background: #030712;
+  color: var(--text);
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+main {
+  min-height: 100vh;
+  padding: 60px 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: #454955;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
+form {
+  position: relative;
+
+  width: min(100%, 700px);
+  margin: 0 auto;
+  padding: 38px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  background: #525b68;
+
+  border: 1px solid var(--border);
+  border-radius: 18px;
+
+  box-shadow:
+    0 0 0 1px rgba(0, 229, 255, 0.04),
+    0 25px 70px rgba(0, 0, 0, 0.65),
+    0 0 45px rgba(0, 229, 255, 0.08);
+
+  text-align: left;
+
+  overflow: hidden;
+}
+
+form::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 2px;
+
+  background: #00e5ff;
+
+  box-shadow:
+    0 0 10px #00e5ff,
+    0 0 25px #00e5ff,
+    0 0 50px #00e5ff;
+}
+
+form::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  right: 0;
+
+  width: 120px;
+  height: 120px;
+
+  border-top: 1px solid rgba(0, 229, 255, 0.35);
+  border-right: 1px solid rgba(0, 229, 255, 0.35);
+
+  pointer-events: none;
+}
+
+form h1,
+form h2 {
+  margin: 0 0 5px;
+
+  color: #e6faff;
+
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 1px;
+
+  text-shadow:
+    0 0 10px rgba(0, 229, 255, 0.3);
+}
+
+form p {
+  margin: 0 0 10px;
+
+  color: var(--muted);
+
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  color: #9eeeff;
+
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+form input,
+form textarea,
+form select {
+  width: 100%;
+  padding: 14px 15px;
+
+  color: var(--text);
+  background: #0b1a2d;
+
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  border-radius: 9px;
+
+  outline: none;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+form input::placeholder,
+form textarea::placeholder {
+  color: #587386;
+}
+
+form input:hover,
+form textarea:hover,
+form select:hover {
+  border-color: rgba(0, 229, 255, 0.5);
+  background: #0c2035;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+  background: #2b4f75;
+  border-color: #00e5ff;
+
+  box-shadow:
+    0 0 0 2px rgba(0, 229, 255, 0.08),
+    0 0 18px rgba(0, 229, 255, 0.15);
+
+  transform: translateY(-1px);
+}
+
+form textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+form select {
+  cursor: pointer;
+}
+
+form select option {
+  color: #e6faff;
+  background: #407ed4;
+}
+
+form button[type="submit"] {
+  position: relative;
+
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px 20px;
+
+  color: #83cae4;
+  background: #00e5ff;
+
+  border: 1px solid #00e5ff;
+  border-radius: 9px;
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 0 10px rgba(0, 229, 255, 0.3),
+    0 0 25px rgba(0, 229, 255, 0.12);
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+form button[type="submit"]:hover {
+  color: #ffffff;
+  background: #087ea0;
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 0 12px rgba(0, 229, 255, 0.45),
+    0 0 30px rgba(0, 229, 255, 0.2);
+}
+
+form button[type="submit"]:active {
+  transform: translateY(0);
+}
+
+form button[type="submit"]:focus-visible {
+  outline: 2px solid #00e5ff;
+  outline-offset: 3px;
+}
+
+form button[type="submit"]:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+@media (max-width: 600px) {
+  main {
+    padding: 25px 12px;
   }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
+
+  form {
+    padding: 25px 18px;
+    border-radius: 15px;
   }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
+  form h1,
+  form h2 {
+    font-size: 23px;
+  }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+  form input,
+  form textarea,
+  form select {
+    padding: 14px;
+    font-size: 16px;
+  }
+
+  form button[type="submit"] {
+    padding: 14px;
+  }
 }

@@ -32,7 +32,6 @@ interface pokemoncontextype{
     eliminarpokemon : (pokemonId : number) => void;
 }
 
-const pokemoncontext = createContext<pokemoncontextype | undefined>(undefined);
 
 export const usePokemonContext = () => {
     const context = useContext(pokemoncontext);
@@ -41,6 +40,8 @@ export const usePokemonContext = () => {
     }
     return context;
 };
+
+ const pokemoncontext = createContext<pokemoncontextype | undefined> (undefined);
 
 export const PokemonProvider : React.FC<{children : React.ReactNode}> = ({children}) => {
     const [EntrenadoresActivo,setentrenadoresActivo] = useState<Usuario[]>([]);

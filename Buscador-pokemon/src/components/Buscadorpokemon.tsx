@@ -23,7 +23,7 @@ export const BuscadorPokemon: React.FC = () => {
 
         try {
             const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${query}`);
-            if (!res.ok) throw new Error('Callate sapo');
+            if (!res.ok) throw new Error('no se localizo ese pokemon');
 
             const datos = await res.json();
             const pokemonEncontrado: pokemonTarjeta = {

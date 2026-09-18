@@ -120,7 +120,7 @@ export const RegistroUsuario : React.FC = () => {
                 <div>
                     <h3> cambiar Entrenador</h3>
                     <div>
-                        {Entrenadores.map((user) => (
+                        {Entrenadores.map((user: Usuario) => (
                             <button key={user.id} type="button" onClick={() => seleccionarEntrenador(user)}
                             style = {{
                                 backgroundColor: EntrenadorActivo?.id === user.id ? '#ff00fff6' : '#e0e0c0',
