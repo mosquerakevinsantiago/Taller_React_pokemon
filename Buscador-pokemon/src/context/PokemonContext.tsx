@@ -27,6 +27,7 @@ interface pokemoncontextype{
     Entrenadores : Usuario[];
     EntrenadorActivo : Usuario | null;
     MochilaActual : pokemonTarjeta[];
+    
     seleccionarEntrenador : (Usuario: Usuario) => void;
     registrarEntrenador : (Usuario: Usuario) => void;
     GuardarMochila : (pokemon : pokemonTarjeta) => void;
@@ -85,10 +86,16 @@ export const PokemonProvider : React.FC<{children : React.ReactNode}> = ({childr
 
     const GuardarMochila = (pokemon:pokemonTarjeta)=> {
         if (!EntrenadorActivo) return;
-        const actualizada = [...MochilaActual, {...pokemon, esFavorito: false}];
+
+    const MochilaGuardada = JSON.parse(localStorage.getItem(`mochila_${EntrenadorActivo.id}`) ?? '[]');
+
+
+        const actualizada = [...MochilaGuardada, {...pokemon, esFavorito: false}];
         setmochilaActual(actualizada);
         localStorage.setItem(`Mochila_${EntrenadorActivo.id}`,JSON.stringify(actualizada));
     };
+
+
 
     const actualizarFavorito = (pokemonId : number) =>{
         if (!EntrenadorActivo) return;
