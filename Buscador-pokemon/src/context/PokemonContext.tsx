@@ -1,4 +1,6 @@
 import React,{ createContext, useContext,useState,useEffect} from "react";
+import {} from "../components/Buscadorpokemon";
+
 
 export interface Usuario {
     id: number;
@@ -60,6 +62,8 @@ export const PokemonProvider : React.FC<{children : React.ReactNode}> = ({childr
             }
         }
     },[]);
+
+
 
     const cargarMochilaEntrenador = (UsuarioId: number) =>{
         const data = localStorage.getItem(`mochila_${UsuarioId}`);
